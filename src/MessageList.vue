@@ -1,6 +1,12 @@
 <template>
   <div class="sc-message-list" ref="scrollList" :style="{backgroundColor: colors.messageList.bg}">
-    <Message v-for="(message, idx) in messages" :message="message" :chatImageUrl="chatImageUrl" :key="idx" :colors="colors" />
+    <Message
+      v-for="(message, idx) in messages"
+      :message="message"
+      :chatImageUrl="chatImageUrl"
+      :key="idx"
+      :user="user"
+      :colors="colors" />
     <Message v-show="showTypingIndicator" :message="{author: 'them', type: 'typing'}" :chatImageUrl="chatImageUrl" :colors="colors" />
   </div>
 </template>
@@ -20,6 +26,10 @@ export default {
     chatImageUrl: {
       type: String,
       default: chatIcon
+    },
+    user: {
+      type: String,
+      required: false,
     },
     showTypingIndicator: {
       type: Boolean,

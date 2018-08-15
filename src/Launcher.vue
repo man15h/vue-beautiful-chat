@@ -14,6 +14,7 @@
       :isOpen="isOpen"
       :onClose="close"
       :onEnd="end"
+      :user="user"
       :showEmoji="showEmoji"
       :showFile="showFile"
       :placeholder="placeholder"
@@ -43,6 +44,10 @@ export default {
     end: {
       type: Function,
       required: true
+    },
+    user: {
+      type: String,
+      required: false,
     },
     close: {
       type: Function,

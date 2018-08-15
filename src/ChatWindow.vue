@@ -9,6 +9,7 @@
     />
     <MessageList
       :messages="messages"
+      :user="user"
       :imageUrl="agentProfile.imageUrl"
       :chatImageUrl="agentProfile.imageUrl"
       :showTypingIndicator="showTypingIndicator"
@@ -43,6 +44,10 @@ export default {
     showFile: {
       type: Boolean,
       default: false
+    },
+    user: {
+      type: String,
+      required: false,
     },
     agentProfile: {
       type: Object,
@@ -115,7 +120,6 @@ export default {
   justify-content: space-between;
   transition: 0.3s ease-in-out;
   border-radius: 10px;
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 .sc-chat-window.closed {

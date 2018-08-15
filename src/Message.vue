@@ -1,7 +1,7 @@
 <template>
   <div class="sc-message">
     <div class="sc-message--content" :class="{
-        sent: message.author === 'me',
+        sent: (message.author === 'me' || message.author == user),
         received: message.author === 'them',
         system: message.type === 'system'
       }">
@@ -50,7 +50,11 @@ export default {
     colors: {
       type: Object,
       required: true
-    }
+    },
+    user: {
+      type: String,
+      required: false,
+    },
   },
   methods: {
     sentColorsStyle() {
@@ -110,7 +114,8 @@ export default {
 
 .sc-message--meta {
   font-size: xx-small;
-  margin-bottom: -10px;
+  margin-bottom: 0px;
+  margin-top: 5px;
   color: white;
   text-align: center;
 }
@@ -127,6 +132,7 @@ export default {
   font-weight: 300;
   font-size: 14px;
   line-height: 1.4;
+  text-align: left;
   white-space: pre-wrap;
   -webkit-font-smoothing: subpixel-antialiased
 }
