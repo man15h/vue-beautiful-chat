@@ -3,7 +3,7 @@
     <img class="sc-header--img" :src="imageUrl" alt="" />
     <div class="sc-header--team-name"> {{teamName}} </div>
     <div class="sc-header--close-button" @click="onClose">
-      <img src="./assets/close-icon.png" alt="" />
+      <img src="./assets/minimize.svg" alt="" height="40px" width="40px"/>
     </div>
     <div class="sc-header--close-button" @click="onEnd">
       <img src="./assets/close-icon.png" alt="" />
