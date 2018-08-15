@@ -40,6 +40,10 @@ export default {
       type: Function,
       required: true
     },
+    end: {
+      type: Function,
+      required: true
+    },
     close: {
       type: Function,
       required: true
