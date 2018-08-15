@@ -59,7 +59,6 @@ export default {
   font-weight: 300;
   font-size: 12px;
   line-height: 1.2;
-  white-space: pre-wrap;
   -webkit-font-smoothing: subpixel-antialiased;
   font-style: italic;
   opacity: .55;
