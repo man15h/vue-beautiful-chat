@@ -1,7 +1,7 @@
 
-export const formatDate = (d) => {
-  if (Number.isInteger(Number(timestamp))) {
-    let d = new Date(timestamp * 1000),
+export const formatDate = (data) => {
+  if (Number.isInteger(Number(data))) {
+    let d = new Date(data * 1000),
     yyyy = d.getFullYear(),
     mm = ('0' + (d.getMonth() + 1)).slice(-2),
     dd = ('0' + d.getDate()).slice(-2),
@@ -24,6 +24,6 @@ export const formatDate = (d) => {
     return time;
   }
   else {
-    return d;
+    return data;
   }
 }
