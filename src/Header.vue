@@ -5,6 +5,9 @@
     <div class="sc-header--close-button" @click="onClose">
       <img src="./assets/close-icon.png" alt="" />
     </div>
+    <div class="sc-header--close-button" @click="onEnd">
+      <img src="./assets/close-icon.png" alt="" />
+    </div>
   </div>
 </template>
 <script>
@@ -18,6 +21,10 @@ export default {
       type: String
     },
     onClose: {
+      type: Function,
+      required: true
+    },
+    onEnd: {
       type: Function,
       required: true
     },

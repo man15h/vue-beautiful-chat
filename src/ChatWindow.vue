@@ -4,6 +4,7 @@
       :teamName="agentProfile.teamName"
       :imageUrl="agentProfile.imageUrl"
       :onClose="onClose"
+      :onEnd="onEnd"
       :colors="colors"
     />
     <MessageList
@@ -48,6 +49,10 @@ export default {
       required: true
     },
     onUserInputSubmit: {
+      type: Function,
+      required: true
+    },
+    onEnd: {
       type: Function,
       required: true
     },

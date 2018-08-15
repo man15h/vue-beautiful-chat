@@ -13,6 +13,7 @@
       :agentProfile="agentProfile"
       :isOpen="isOpen"
       :onClose="close"
+      :onEnd="end"
       :showEmoji="showEmoji"
       :showFile="showFile"
       :placeholder="placeholder"
@@ -74,7 +75,7 @@ export default {
     colors: {
       type: Object,
       required: false,
-      validator: c => 
+      validator: c =>
         'header' in c
         && 'bg' in c.header && 'text' in c.header
         && 'launcher' in c
@@ -149,7 +150,7 @@ export default {
   position: relative;
   display: block;
   width: 60px;
-  height: 60px;  
+  height: 60px;
   border-radius: 50%;
   transition: box-shadow 0.2s ease-in-out;
 }
