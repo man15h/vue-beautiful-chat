@@ -8,11 +8,24 @@
       <div v-if="message.type !== 'system'" class="sc-message--avatar" :style="{
         backgroundImage: `url(${chatImageUrl})`
       }"></div>
-      <TextMessage v-if="message.type === 'text'" :data="message.data" :messageColors="determineMessageColors()" />
-      <EmojiMessage v-else-if="message.type === 'emoji'" :data="message.data" />
-      <FileMessage v-else-if="message.type === 'file'" :data="message.data" :messageColors="determineMessageColors()" />
-      <TypingMessage v-else-if="message.type === 'typing'" :messageColors="determineMessageColors()" />
-      <SystemMessage v-else-if="message.type === 'system'" :data="message.data" :messageColors="determineMessageColors()" />
+      <TextMessage
+      v-if="message.type === 'text'"
+      :data="message.data"
+      :messageColors="determineMessageColors()" />
+      <EmojiMessage
+        v-else-if="message.type === 'emoji'"
+        :data="message.data" />
+      <FileMessage
+        v-else-if="message.type === 'file'"
+        :data="message.data"
+        :messageColors="determineMessageColors()" />
+      <TypingMessage
+        v-else-if="message.type === 'typing'"
+        :messageColors="determineMessageColors()" />
+      <SystemMessage
+        v-else-if="message.type === 'system' || message.type === 'error'"
+        :data="message.data"
+        :messageColors="determineMessageColors()" />
     </div>
   </div>
 </template>
@@ -70,7 +83,7 @@ export default {
       }
     },
     determineMessageColors() {
-      return this.message.author === 'me' ? this.sentColorsStyle() : this.receivedColorsStyle()
+      return (this.message.author === 'me' || this.message.author === this.user) ? this.sentColorsStyle() : this.receivedColorsStyle()
     }
   }
 }
@@ -117,7 +130,7 @@ export default {
   margin-bottom: 0px;
   margin-top: 5px;
   color: white;
-  text-align: center;
+  text-align: left;
 }
 
 @media (max-width: 450px) {
@@ -133,7 +146,6 @@ export default {
   font-size: 14px;
   line-height: 1.4;
   text-align: left;
-  white-space: pre-wrap;
   -webkit-font-smoothing: subpixel-antialiased
 }
 .sc-message--content.sent .sc-message--text {

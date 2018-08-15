@@ -1,9 +1,15 @@
 <template>
-  <div class="sc-message--system" :style="messageColors">{{data.text}}<p v-if="data.meta" class='sc-message--meta' :style="{color: messageColors.color}">{{data.meta}}</p>
+  <div class="sc-message--system" :style="messageColors">
+    {{data.text}}
+    <p v-if="data.meta" class='sc-message--meta' :style="{color: messageColors.color}">
+      {{res(data.meta)}}
+    </p>
   </div>
 </template>
 
 <script>
+import {formatDate} from './lib';
+
 export default {
   props: {
     data: {
@@ -13,6 +19,11 @@ export default {
     messageColors: {
       type: Object,
       required: true
+    }
+  },
+  methods:{
+    res(d){
+      formatDate(d);
     }
   }
 }
