@@ -1,7 +1,8 @@
 <template>
   <div class="sc-header" :style="{background: colors.header.bg, color: colors.header.text}">
-    <img class="sc-header--img" :src="imageUrl" alt="" />
-    <div class="sc-header--team-name"> {{teamName}} </div>
+    <div class="sc-header--team-name"> {{truncateName}} &nbsp;
+      <span v-if="id" style="font-size:0.9rem">#{{truncateId}}</span>
+    </div>
     <div class="sc-header--close-button" @click="onClose">
       <img src="./assets/minimize.svg" alt="" height="40px" width="40px"/>
     </div>
@@ -24,13 +25,36 @@ export default {
       type: Function,
       required: true
     },
+    id:{
+      type: String,
+    },
     onEnd: {
       type: Function,
-      required: true
+      required: false
     },
     colors: {
       type: Object,
       required: true
+    }
+  },
+  computed: {
+    truncateName: function () {
+      let length = 17;
+      let ending = "...";
+      if ( this.teamName.length > length) {
+        return  this.teamName.substring(0, length - ending.length) + ending;
+      } else {
+        return  this.teamName;
+      }
+    },
+    truncateId: function () {
+      let length = 15;
+      let ending = "...";
+      if (this.id.length > length) {
+        return  this.id.substring(0, length - ending.length) + ending;
+      } else {
+        return  this.id;
+      }
     }
   }
 }
@@ -56,6 +80,7 @@ export default {
 .sc-header--team-name {
   align-self: center;
   padding: 10px;
+  flex-direction: row;
   flex: 1;
   user-select: none;
   border-radius: 5px;

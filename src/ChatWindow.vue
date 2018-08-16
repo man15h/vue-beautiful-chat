@@ -2,6 +2,7 @@
   <div class="sc-chat-window" :class="{opened: isOpen, closed: !isOpen}">
     <Header
       :teamName="agentProfile.teamName"
+      :id="agentProfile.tradeID"
       :imageUrl="agentProfile.imageUrl"
       :onClose="onClose"
       :onEnd="onEnd"
@@ -59,7 +60,7 @@ export default {
     },
     onEnd: {
       type: Function,
-      required: true
+      required: false
     },
     onClose: {
       type: Function,

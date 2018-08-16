@@ -43,7 +43,7 @@ export default {
     },
     end: {
       type: Function,
-      required: true
+      required: false
     },
     user: {
       type: String,
