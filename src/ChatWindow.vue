@@ -1,7 +1,7 @@
 <template>
   <div class="sc-chat-window" :class="{opened: isOpen, closed: !isOpen}">
     <Header
-      :teamName="agentProfile.userid || agentProfile.teamName"
+      :teamName="agentProfile.userid"
       :id="agentProfile.tradeID || agentProfile.chatID"
       :imageUrl="agentProfile.imageUrl|| ''"
       :onClose="onClose"

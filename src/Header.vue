@@ -15,7 +15,8 @@
 export default {
   props: {
     teamName: {
-      type: String
+      type: String,
+      default: 'user',
     },
     onClose: {
       type: Function,
