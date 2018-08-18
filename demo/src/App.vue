@@ -9,10 +9,14 @@
       :isOpen="isChatOpen"
       :close="closeChat"
       :open="openChat"
+      :end="endChat"
       :showEmoji="true"
+      :gravatarType="dedsfault"
+      :activeChats="activeChats"
+      :chatSelected="endChat"
       :showFile="true"
       :showTypingIndicator="showTypingIndicator"
-      :colors="colors"
+      :colors="cl"
       :alwaysScrollToBottom="alwaysScrollToBottom" />
       <p class="text-center toggle">
         <a v-if="!isChatOpen" :style="{color: linkColor}" href="#" @click.prevent="openChat()">Open the chat window</a>
@@ -49,13 +53,70 @@ export default {
         imageUrl: 'https://a.slack-edge.com/66f9/img/avatars-teams/ava_0001-34.png'
       },
       messageList: messageHistory,
-      newMessagesCount: 0,
+      newMessagesCount: 4,
       isChatOpen: false,
       showTypingIndicator: false,
-      colors: null,
+      colors: {
+        header: {
+          bg: '#345cd5',
+          text: '#fff'
+        },
+        launcher: {
+          bg: '#345cd5'
+        },
+        messageList: {
+          bg: '#fff'
+        },
+        sentMessage: {
+          bg: '#345cd5',
+          text: '#fff'
+        },
+        receivedMessage: {
+          bg: '#eaeaea',
+          text: '#222222'
+        },
+        userInput: {
+          bg: '#fff',
+          text: '#212121'
+        }
+      },
       availableColors,
+      cl:{
+        header: {
+          bg: '#345cd5',
+          text: '#fff'
+        },
+        launcher: {
+          bg: '#345cd5'
+        },
+        messageList: {
+          bg: '#fff'
+        },
+        sentMessage: {
+          bg: '#345cd5',
+          text: '#fff'
+        },
+        receivedMessage: {
+          bg: '#eaeaea',
+          text: '#222222'
+        },
+        userInput: {
+          bg: '#fff',
+          text: '#212121'
+        }
+      },
+      dedsfault: {
+        size: 40,
+        defaultImg: 'retro',
+        rating: 'g'
+      },
       chosenColor: null,
-      alwaysScrollToBottom: false
+      alwaysScrollToBottom: false,
+      activeChats:[
+        {userid: 'manish', tradeID:"dhsj6567vg", counts: 1},
+        {userid: 'rajdeeps', tradeID:"132323", counts:3}
+      ]
+
     }
   },
   created() {
@@ -84,6 +145,9 @@ export default {
     setColor (color) {
       this.colors = this.availableColors[color]
       this.chosenColor = color
+    },
+    endChat(val){
+      console.log(val);
     }
   },
   computed: {

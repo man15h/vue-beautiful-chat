@@ -54,6 +54,7 @@
   },
   "dependencies": {
     "babel-preset-env": "^1.6.1",
-    "emoji-js": "^3.4.0"
+    "emoji-js": "^3.4.0",
+    "md5": "^2.2.1"
   }
 }

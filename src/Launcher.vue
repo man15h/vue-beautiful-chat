@@ -1,12 +1,30 @@
 <template>
-  <div>
-    <div class="sc-launcher" :class="{opened: isOpen}" @click.prevent="isOpen ? close() : open()" :style="{backgroundColor: colors.launcher.bg}">
+  <div class="sc-main-wrapper">
+    <div
+      class="sc-launcher"
+      :class="{opened: isOpen || isMultipleOpen}"
+      @click.prevent="onClick"
+      :style="{backgroundColor: colors.launcher.bg}">
       <div v-if="newMessagesCount > 0 && !isOpen" class="sc-new-messsages-count">
         {{newMessagesCount}}
       </div>
       <img class="sc-open-icon" src="./assets/close-icon.png" />
       <img class="sc-closed-icon" src="./assets/logo-no-bg.svg" />
     </div>
+    <ul class="fab-buttons" v-if="isMultipleOpen">
+      <li class="fab-buttons__item"
+        v-for="(head, index) in activeChats"
+        :key="index"
+        :style="{backgroundColor: colors.launcher.bg}"
+        @click.prevent="chatSelected(head); open(); isMultipleOpen=false;">
+        <div v-if="head.counts > 0" class="sc-head-count">
+          {{head.counts}}
+        </div>
+        <a class="fab-buttons__link" v-bind:class="{'notify': head.counts > 0}" :data-tooltip="head.tradeID">
+          <img :src="url(head.userid)" />
+        </a>
+      </li>
+    </ul>
     <ChatWindow
       :messageList="messageList"
       :onUserInputSubmit="onMessageWasSent"
@@ -15,6 +33,7 @@
       :onClose="close"
       :onEnd="end"
       :user="user"
+      :chatSelected="chatSelected"
       :showEmoji="showEmoji"
       :showFile="showFile"
       :placeholder="placeholder"
@@ -26,6 +45,7 @@
 </template>
 <script>
 import ChatWindow from './ChatWindow.vue'
+import md5 from 'md5';
 
 export default {
   props: {
@@ -42,16 +62,23 @@ export default {
       required: true
     },
     end: {
-      type: Function,
-      required: false
+      type: Function
+    },
+    chatSelected:{
+      type: Function
     },
     user: {
       type: String,
       required: false,
     },
+    activeChats: {
+      type: Array,
+    },
     close: {
-      type: Function,
-      required: true
+      type: Function
+    },
+    gravatarType:{
+      type:Object,
     },
     showFile: {
       type: Boolean,
@@ -131,7 +158,36 @@ export default {
   },
   data () {
     return {
-
+      isMultipleOpen: false,
+    }
+  },
+  methods:{
+    openMultiple(){
+      this.isMultipleOpen = !this.isMultipleOpen;
+    },
+    url(userid) {
+      const img = [
+        '//www.gravatar.com/avatar/',
+        md5(userid.trim().toLowerCase()),
+        `?s=${this.gravatarType.size || 40}`,
+         `&d=${this.gravatarType.defaultImg || 'retro'}`,
+         `&r=${this.gravatarType.rating || 'g'}`
+      ];
+      return img.join('');
+    },
+    onClick(){
+      if (this.isOpen || this.isMultipleOpen) {
+        this.close();
+        this.isMultipleOpen = false;
+      }
+      else {
+        if (this.activeChats  && this.activeChats.length > 1) {
+          this.isMultipleOpen =true;
+        }
+        else {
+          this.open();
+        }
+      }
     }
   },
   components: {
@@ -140,15 +196,23 @@ export default {
 }
 </script>
 <style scoped>
-.sc-launcher {
+.sc-main-wrapper{
+
   width: 60px;
-  height: 60px;
   background-position: center;
   background-repeat: no-repeat;
   position: fixed;
   right: 25px;
   bottom: 25px;
+}
+.sc-launcher {
+  width: 60px;
+  height: 60px;
+  background-position: center;
+  background-repeat: no-repeat;
   border-radius: 50%;
+  position: absolute;
+  bottom: 0;
   box-shadow: none;
   transition: box-shadow 0.2s ease-in-out;
   cursor: pointer;
@@ -221,4 +285,92 @@ export default {
   font-size: 12px;
   font-weight: 500;
 }
+.fab-buttons {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 70px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .fab-action-button__icon {
+    display: inline-block;
+    width: 56px;
+    height: 56px;
+  }
+
+  .fab-buttons__item {
+    display: block;
+    text-align: center;
+    margin: 12px auto;
+    width: 40px;
+    overflow: hidden;
+    height: 40px;
+    border-radius: 50%;
+  }
+
+  .fab-buttons__link {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    text-decoration: none;
+    border-radius: 50%;
+  }
+  .fab-buttons__link img{
+    position: relative;
+    top: 0px;
+  }
+  .fab-buttons__link.notify img{
+    top: -20px;
+  }
+
+  [data-tooltip]:before {
+  top: 50%;
+  margin-top: -11px;
+  font-weight: 600;
+  border-radius: 2px;
+  background: #585858;
+  color: #fff;
+  content: attr(data-tooltip);
+  font-size: 12px;
+  text-decoration: none;
+  visibility: hidden;
+  opacity: 0;
+  padding: 4px 7px;
+  margin-right: 12px;
+  position: absolute;
+  transform: scale(0);
+  right: 100%;
+  white-space: nowrap;
+  transform-origin: top right;
+  transition: all .3s cubic-bezier(.25, .8, .25, 1);
+  }
+
+  [data-tooltip]:hover:before {
+  visibility: visible;
+  opacity: 1;
+  transform: scale(1);
+  transform-origin: right center 0;
+  }
+
+  .sc-head-count{
+    position: relative;
+    top: 10px;
+    /* left: 15px; */
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    background: #ff4646;
+    color: white;
+    text-align: center;
+    margin: auto;
+    font-size: 12px;
+    font-weight: 500;
+  }
 </style>
