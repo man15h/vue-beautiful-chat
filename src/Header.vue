@@ -14,10 +14,6 @@
 <script>
 export default {
   props: {
-    imageUrl: {
-      type: String,
-      required: true
-    },
     teamName: {
       type: String
     },

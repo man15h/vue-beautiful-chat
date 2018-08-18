@@ -3,7 +3,7 @@
     <Header
       :teamName="agentProfile.userid || agentProfile.teamName"
       :id="agentProfile.tradeID || agentProfile.chatID"
-      :imageUrl="agentProfile.imageUrl"
+      :imageUrl="agentProfile.imageUrl|| ''"
       :onClose="onClose"
       :onEnd="onEnd"
       :colors="colors"
