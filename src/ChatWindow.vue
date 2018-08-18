@@ -1,8 +1,8 @@
 <template>
   <div class="sc-chat-window" :class="{opened: isOpen, closed: !isOpen}">
     <Header
-      :teamName="agentProfile.teamName"
-      :id="agentProfile.tradeID"
+      :teamName="agentProfile.userid || agentProfile.teamName"
+      :id="agentProfile.tradeID || agentProfile.chatID"
       :imageUrl="agentProfile.imageUrl"
       :onClose="onClose"
       :onEnd="onEnd"
@@ -11,8 +11,8 @@
     <MessageList
       :messages="messages"
       :user="user"
-      :imageUrl="agentProfile.imageUrl"
-      :chatImageUrl="agentProfile.imageUrl"
+      :imageUrl="agentProfile.imageUrl || ''"
+      :chatImageUrl="agentProfile.imageUrl || ''"
       :showTypingIndicator="showTypingIndicator"
       :colors="colors"
       :alwaysScrollToBottom="alwaysScrollToBottom"
